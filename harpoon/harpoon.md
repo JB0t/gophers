@@ -8,7 +8,7 @@ Shameless bash-fs re-creation of ThePrimagen's NeoVim plugin [Harpoon](https://g
 # Install the base script
 go install .
 # Add the bash wrapper funcs to your bash profile
-echo "source $PWD/harpoon.sh" >> ~/.bashrc
+echo "source $PWD/hpn.sh" >> ~/.bashrc
 source ~/.bashrc
 ```
 
