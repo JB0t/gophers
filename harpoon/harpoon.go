@@ -144,9 +144,7 @@ func deletePathByIndex(index int, debug bool) {
 		if exists {
 			delete(harpoons, index)
 			saveHarpoons(debug)
-			if debug {
-				fmt.Printf("Removed [%d] %s\n",index,path)
-			}
+			fmt.Printf("Removed [%d] %s\n",index,path)
 		} else {
 			if debug {
 				fmt.Printf("Index %d not found\n",index)
