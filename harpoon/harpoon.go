@@ -216,6 +216,7 @@ func main(){
 				fmt.Println("Clearing paths.")
 			}
 			removeFileIfExists(h_file_path)
+			fmt.Println("Harpoon Emptied.")
 		} else {
 			fmt.Println("Ambiguous arguments. Please select 1")
 		}
