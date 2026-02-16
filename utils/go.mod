@@ -1,3 +1,3 @@
-module github.com/JB0t/gophers/utils
+module utils
 
 go 1.23.4
