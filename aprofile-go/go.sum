@@ -1,6 +1,7 @@
+github.com/JB0t/gophers/utils v0.0.0-20260216200216-db2e3fc1a257 h1:clLtu6fS7etA7/2gt9RKeR2QXOMReXyzelCAoVEYApA=
+github.com/JB0t/gophers/utils v0.0.0-20260216200216-db2e3fc1a257/go.mod h1:vvrf2D6/CjDs34skb4xLyl9i+Q1LYZF/ibBP9tk9ipc=
 github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203 h1:XBBHcIb256gUJtLmY22n99HaZTz+r2Z51xUPi01m3wg=
 github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203/go.mod h1:E1jcSv8FaEny+OP/5k9UxZVw9YFWGj7eI4KR/iOBqCg=
 golang.org/x/sys v0.41.0 h1:Ivj+2Cp/ylzLiEU89QhWblYnOE9zerudt9Ftecq2C6k=
 golang.org/x/sys v0.41.0/go.mod h1:OgkHotnGiDImocRcuBABYBEXf8A9a87e/uXjp9XT3ks=
-golang.org/x/tools v0.42.0 h1:uNgphsn75Tdz5Ji2q36v/nsFSfR/9BRFvqhGBaJGd5k=
 golang.org/x/tools v0.42.0/go.mod h1:Ma6lCIwGZvHK6XtgbswSoWroEkhugApmsXyrUmBhfr0=
