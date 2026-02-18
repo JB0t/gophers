@@ -19,15 +19,31 @@ type Profile struct {
 	region string
 }
 
+func flattenListAtIndex(list []string, index int) []byte {
+	flattened := make([]byte, 0)
+	for _,item:=range list{
+		flattened = append(flattened, item[index])
+	}
+	return flattened
+}
+
+func compareByteLists(list1 []byte, list2 []byte) bool {
+	for i:=0;i<len(list1);i++ {
+		if list1[i] != list2[i] {
+			return false
+		}
+	}
+	return true
+}
+
 var profiles = make(map[string]Profile)
 var a_out_path = fmt.Sprintf("%s/.a_out",getEnvVar("GOPATH",getEnvVar("HOME","tmp")))
 var nonAlphanumericRegex = regexp.MustCompile(`[^a-zA-Z0-9 ]+`)
 var debug = false
 var test = false
 
-// Unit tests
+// unit tests
 func testUserInput() {
-	testStringList := []string{"abcdefg","1234567","!@#$%^&*()", "abc123!@#", "1234567890", "!!@#$%^&*()_+"}
 	if err := keyboard.Open(); err != nil {
 		fmt.Printf("Failed to open keyboard: %s\n", err)
 		return
@@ -40,8 +56,8 @@ func testUserInput() {
 	totalStringList := make([]string, 0)
 	currentStringList := make([]string, 0)
 	// init profile list
-	for _,string := range testStringList {
-			totalStringList = append(totalStringList, string)
+	for _,profile := range profiles {
+			totalStringList = append(totalStringList, profile.name)
 	}
 	currentStringList = totalStringList
 	for{
@@ -68,6 +84,7 @@ func testUserInput() {
 				fmt.Printf("Final input: '%s'\n", currentStringList[0])
 				return
 			} else {
+				fmt.Printf("TabKey pressed\n")
 				largestListSharedPrefix := getNextSharedPrefix(currentStringList)
 				fmt.Printf("Next largest prefix chunk: '%s'\n", largestListSharedPrefix)
 				// set the user selection to the total up to the next chunk
@@ -90,15 +107,11 @@ func testUserInput() {
 			currentStringList = selectPrefixMatches(userSelectStr, currentStringList)
 		}
 		fmt.Printf("Current input: '%s'\n", userSelectStr)
-		if len(userSelectStr) >= 10 {
-			fmt.Println("Test input limit reached, exiting test\n")
-			fmt.Printf("Final input: '%s'\n", userSelectStr)
-			return
-		}
 	}
 }
 
-// Utils
+// utils
+//TODO: fix this
 
 func checkExists(path string) bool {
 	_, error := os.Stat(path)
@@ -213,22 +226,28 @@ func getNextStringChunk(fullstring string, compareString string) string {
 }
 
 func getNextSharedPrefix(stringList []string) string {
-	// need index of max profile name, maybe we want the smallest actually
 	smallestProfileName := minimumProfileName(stringList)
 	if debug {
 		fmt.Printf("DEBUG: Smallest profile name: '%s'\n", smallestProfileName)
 	}
+	prefixList := make([]string, 0)
 	for i := 0; i < len(stringList)-1; i++ {
 		for j := 0; j < len(smallestProfileName); j++ {
 			if debug {
-				fmt.Printf("DEBUG: Comparing character '%s' at index %d for string '%s' and '%s'\n", stringList[i][j], j, stringList[i], stringList[i+1])
+				fmt.Printf("DEBUG: Comparing character '%c' at index %d for string '%s' and '%s'\n", stringList[i][j], j, stringList[i], stringList[i+1])
 			}
 			if stringList[i][j] != stringList[i+1][j] {
-				return stringList[0][:j]
+				prefixList = append(prefixList, stringList[i][:j])
 			}
 		}
 	}
-	return stringList[0]
+	smallestPrefix := prefixList[0]
+	for i:=1;i<len(prefixList);i++{
+		if len(smallestPrefix) > len(prefixList[i]) {
+			smallestPrefix = prefixList[i]
+		}
+	}
+	return smallestPrefix
 }
 
 func main() {
@@ -241,13 +260,13 @@ func main() {
 	}
 	if test {
 		testUserInput()
-	} else {
-		selectedProfileName := selectProfileName()
-		if selectedProfileName == "" {
-			return
-		}
-		writeProfile(selectedProfileName)
+		return
 	}
+	selectedProfileName := selectProfileName()
+	if selectedProfileName == "" {
+		return
+	}
+	writeProfile(selectedProfileName)
 }
 
 // Profile ops
