@@ -15,18 +15,18 @@ type Trie struct {
 	rootNode *Node
 }
 
-func (t *Trie) init() {
+func (t *Trie) Init() {
 	t.rootNode=&Node{parent:nil,data:make([]byte,0)}
 }
 
-func (t *Trie) printBranches() {
+func (t *Trie) PrintBranches() {
 	branchesToPrint:=make([][]byte,0)
 	for _,child:=range t.rootNode.children{
 		printBranchFromTrie(child, make([]byte, 0), branchesToPrint)
 	}
 }
 
-func (t *Trie) printNodes() {
+func (t *Trie) PrintNodes() {
 	for _,child:=range t.rootNode.children{
 		printNodeFromTrie(child)
 	}
@@ -52,11 +52,11 @@ func printBranchFromTrie(node *Node, currentBranch []byte, branchesToPrint [][]b
 	}
 }
 
-func (t *Trie) addDataToTrie(data []byte) {
+func (t *Trie) AddDataToTrie(data []byte) {
 	addData(t.rootNode,data)
 }
 
-func (t *Trie) convertToPrefixTrie() {
+func (t *Trie) ConvertToPrefixTrie() {
 	convertToPrefixTrie(t.rootNode)
 }
 
